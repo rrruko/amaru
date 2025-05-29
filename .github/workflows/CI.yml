@@ -314,3 +314,16 @@ jobs:
         run: |
           RUST_BACKTRACE=1 cabal run blackbox-test -- ../../target/debug/simulator amaru 1 10 --disable-shrinking --stake-distribution-file data/stake.json --consensus-context-file data/context.json
         working-directory: simulation-testing/moskstraumen
+
+  test-vectors:
+    name: TestVectors
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          name: rrruko/cardano-blueprint
+          path: cardano-blueprint
+          ref: refs/heads/rrruko/ledger-conformance-test-vectors
+      - name: Unpack vectors
+        run: |
+          tar -xzf cardano-blueprint/src/ledger/conformance-test-vectors/vectors.tar.gz
