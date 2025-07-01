@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use amaru_kernel::{network::NetworkName, Nonce, Point};
+use amaru_kernel::network::NetworkName;
 
 pub(crate) mod bootstrap;
 pub(crate) mod daemon;

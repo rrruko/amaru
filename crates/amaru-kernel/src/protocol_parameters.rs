@@ -1,6 +1,5 @@
 use pallas_codec::minicbor::{data::Tag, Decoder};
-use pallas_primitives::CostModel;
-use pallas_primitives::conway::CostModels;
+use pallas_primitives::{conway::CostModels, CostModel};
 
 use crate::{cbor, Coin, EpochInterval, ExUnits, Lovelace, RationalNumber};
 
@@ -105,9 +104,15 @@ impl<'b, C> cbor::decode::Decode<'b, C> for ProtocolParameters {
         for item in i {
             let (k, v) = item?;
             match k {
-                0 => { plutus_v1 = Some(v); }
-                1 => { plutus_v2 = Some(v); }
-                2 => { plutus_v3 = Some(v); }
+                0 => {
+                    plutus_v1 = Some(v);
+                }
+                1 => {
+                    plutus_v2 = Some(v);
+                }
+                2 => {
+                    plutus_v3 = Some(v);
+                }
                 _ => {}
             }
         }
@@ -267,17 +272,17 @@ impl<C> cbor::encode::Encode<C> for ProtocolParameters {
             count += 1;
         }
         e.map(count)?;
-        if let Some(&ref v) = &self.cost_models.plutus_v1.as_ref() {
+        if let Some(v) = self.cost_models.plutus_v1.as_ref() {
             e.u8(0)?;
-            e.encode_with(&v, ctx)?;
+            e.encode_with(v, ctx)?;
         }
-        if let Some(&ref v) = &self.cost_models.plutus_v2.as_ref() {
+        if let Some(v) = self.cost_models.plutus_v2.as_ref() {
             e.u8(1)?;
-            e.encode_with(&v, ctx)?;
+            e.encode_with(v, ctx)?;
         }
-        if let Some(&ref v) = &self.cost_models.plutus_v3.as_ref() {
+        if let Some(v) = self.cost_models.plutus_v3.as_ref() {
             e.u8(2)?;
-            e.encode_with(&v, ctx)?;
+            e.encode_with(v, ctx)?;
         }
 
         e.array(2)?;
